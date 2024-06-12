@@ -101,7 +101,11 @@ class StatamicEntryExportPdf extends Action
     private function toString($value)
     {
         if ($value instanceof Value) {
-            $value = $value->value();
+            if ($value->fieldType() instanceof Checkboxes) {
+               $value = implode(', ', $value->raw());
+           } else {
+               $value = $value->value();
+            }
         }
 
         if ($value instanceof Carbon) {
